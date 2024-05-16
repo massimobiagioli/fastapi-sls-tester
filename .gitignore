@@ -1,0 +1,35 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.venv/
+.pytest_cache/
+.coverage
+
+# Serverless
+.serverless/
+
+# Poetry
+.poetry/
+poetry.lock
+
+# Ruff
+.ruff_cache/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Node.js
+node_modules/
+
+# MacOs
+.DS_Store
