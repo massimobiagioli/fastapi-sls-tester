@@ -1,6 +1,6 @@
 resource "null_resource" "package_layers" {
   triggers = {
-    hash_poetry = sha1("${path.module}/../../../pyproject.toml")
+    hash_poetry = sha1(local.pyproject_toml)
   }
 
   provisioner "local-exec" {
@@ -15,10 +15,10 @@ resource "aws_s3_bucket" "layer" {
 }
 
 resource "aws_s3_object" "layer_zip" {
-  bucket     = aws_s3_bucket.layer.id
-  key        = "${var.name}.zip"
-  source     = "${local.build_dir}/${var.name}.zip"
-  depends_on = [null_resource.package_layers]
+  bucket      = aws_s3_bucket.layer.id
+  key         = local.layer_s3_key
+  source      = local.layer_path
+  depends_on  = [null_resource.package_layers]
 
   tags = var.tags
 }
@@ -31,4 +31,5 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   description         = var.description
   skip_destroy        = true
   depends_on          = [aws_s3_object.layer_zip]
+  source_code_hash    = filebase64sha256(local.layer_path)
 }
