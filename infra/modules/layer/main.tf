@@ -11,10 +11,10 @@ resource "aws_s3_bucket" "layer" {
 }
 
 resource "aws_s3_object" "layer_zip" {
-  bucket      = aws_s3_bucket.layer.id
-  key         = local.layer_s3_key
-  source      = local.filename
-  depends_on  = [data.archive_file.layer]
+  bucket     = aws_s3_bucket.layer.id
+  key        = local.layer_s3_key
+  source     = local.filename
+  depends_on = [data.archive_file.layer]
 
   tags = var.tags
 }

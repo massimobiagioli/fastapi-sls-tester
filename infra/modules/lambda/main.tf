@@ -11,7 +11,7 @@ resource "aws_lambda_function" "app" {
   handler          = var.handler
   layers           = var.layers
   runtime          = local.lambda_runtime
-  source_code_hash = data.archive_file.lambda.output_base64sha256  
+  source_code_hash = data.archive_file.lambda.output_base64sha256
   # environment {
   #   variables = {
   #     for pair in split("\n", var.secret_value) :

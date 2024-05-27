@@ -28,10 +28,4 @@ pip install \
     -r "$requirements_file" \
     -t "$layer_dir/python"
 
-# cd "$layer_dir"
-# zip -r "$1.zip" .
-# mv "$1.zip" "../$1.zip"
-# rm -rf "../$1"
-# rm "../requirements.txt"
-
 printf "Layer packaged: $1\n"
