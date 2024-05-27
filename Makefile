@@ -1,4 +1,4 @@
-.PHONY: help start-local test coverage
+.PHONY: help start-local test coverage terraform-init terraform-apply
 
 default: help
 
@@ -17,3 +17,9 @@ endif
 
 coverage: test # Run tests with coverage
 	poetry run pytest --cov-report term-missing --cov=app
+
+terraform-init: # Initialize terraform
+	cd infra/live/${stage} && terraform init
+
+terraform-apply: # Apply terraform
+	cd infra/live/${stage} && terraform apply -auto-approve -var "stage=${stage}" -var "region=${region}"
