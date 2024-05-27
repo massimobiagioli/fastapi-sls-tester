@@ -7,9 +7,6 @@ __pycache__/
 .pytest_cache/
 .coverage
 
-# Serverless
-.serverless/
-
 # Poetry
 .poetry/
 poetry.lock
@@ -28,8 +25,13 @@ poetry.lock
 *.iws
 out/
 
-# Node.js
-node_modules/
-
 # MacOs
 .DS_Store
+
+# Infra
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+terraform.tfvars
+.terraform.lock.hcl
+build/
