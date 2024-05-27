@@ -1,8 +1,4 @@
 resource "null_resource" "package_lambda" {
-  triggers = {
-    hash_source_dir = sha1(join("", [for f in fileset(var.source_dir, "*") : filesha1("${var.source_dir}/${f}")]))
-  }
-
   provisioner "local-exec" {
     command = "cd ${path.module} && ./package_lambda.sh ${var.function_name} ${var.source_dir} ${local.build_dir}"
   }
@@ -12,11 +8,10 @@ resource "aws_lambda_function" "app" {
   filename         = local.filename
   function_name    = var.function_name
   role             = aws_iam_role.lambda_exec.arn
-  depends_on       = [null_resource.package_lambda]
   handler          = var.handler
   layers           = var.layers
   runtime          = local.lambda_runtime
-  source_code_hash = filebase64sha256(local.filename)  
+  source_code_hash = data.archive_file.lambda.output_base64sha256  
   # environment {
   #   variables = {
   #     for pair in split("\n", var.secret_value) :

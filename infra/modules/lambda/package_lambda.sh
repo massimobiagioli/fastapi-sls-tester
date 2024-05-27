@@ -24,8 +24,8 @@ cd $3/$LAMBDA_ROOT_NAME
 rm -rf __pycache__/
 rm *.pyc
 
-cd ..
-zip -r $1.zip .
-rm -rf $LAMBDA_ROOT_NAME
+# cd ..
+# zip -r $1.zip .
+# rm -rf $LAMBDA_ROOT_NAME
 
 printf "Lambda $1 packaged\n"
