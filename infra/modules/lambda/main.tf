@@ -5,13 +5,14 @@ resource "null_resource" "package_lambda" {
 }
 
 resource "aws_lambda_function" "app" {
-  filename      = local.filename
-  function_name = var.function_name
-  role          = aws_iam_role.lambda_exec.arn
-  depends_on    = [null_resource.package_lambda]
-  handler       = var.handler
-  layers        = var.layers
-  runtime       = local.lambda_runtime
+  filename         = local.filename
+  function_name    = var.function_name
+  role             = aws_iam_role.lambda_exec.arn
+  depends_on       = [null_resource.package_lambda]
+  handler          = var.handler
+  layers           = var.layers
+  runtime          = local.lambda_runtime
+  source_code_hash = local.source_code_hash
   # environment {
   #   variables = {
   #     for pair in split("\n", var.secret_value) :
