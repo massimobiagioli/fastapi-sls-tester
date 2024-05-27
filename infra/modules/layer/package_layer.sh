@@ -20,11 +20,15 @@ poetry export -f requirements.txt --output "$requirements_file" --without-hashes
 
 printf "Packaging layer: $1\n"
 
+# pip install \
+#     --platform manylinux2014_x86_64 \
+#     --implementation cp \
+#     --only-binary=:all: \
+#     --upgrade \
+#     -r "$requirements_file" \
+#     -t "$layer_dir/python"
+
 pip install \
-    --platform manylinux2014_x86_64 \
-    --implementation cp \
-    --only-binary=:all: \
-    --upgrade \
     -r "$requirements_file" \
     -t "$layer_dir/python"
 
