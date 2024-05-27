@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.get("/")
 def index():
-    return {"health": "ok"}
+    return {"healthz": "ok"}
 
 
 handler = Mangum(app)
