@@ -1,4 +1,8 @@
 resource "null_resource" "package_layers" {
+  triggers = {
+    hash_poetry = sha1("${path.module}/../../../pyproject.toml")
+  }
+
   provisioner "local-exec" {
     command = "cd ${path.module} && ./package_layer.sh ${var.name} ${local.build_dir}"
   }

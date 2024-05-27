@@ -1,6 +1,6 @@
 resource "null_resource" "package_lambda" {
   triggers = {
-    hash_poetry = filemd5("${path.module}/../../../pyproject.toml")
+    hash_source_dir = sha1(join("", [for f in fileset(var.source_dir, "*"): filesha1("${var.source_dir}/${f}")]))
   }
   
   provisioner "local-exec" {
