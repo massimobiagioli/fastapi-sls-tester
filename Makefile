@@ -1,4 +1,4 @@
-.PHONY: help start-local test coverage lint lint-fix format terraform-init terraform-fmt terraform-apply
+.PHONY: help start-local test coverage lint lint-fix format pre-commit-install pre-commit terraform-init terraform-fmt terraform-apply
 
 default: help
 
@@ -26,6 +26,12 @@ lint-fix: # Run linter with fix
 
 format: # Run formatter
 	poetry run ruff format .
+
+pre-commit-install: # Install pre-commit hooks
+	pre-commit install
+
+pre-commit: # Run pre-commit hooks
+	pre-commit
 
 terraform-init: # Initialize terraform
 	cd infra/live/${stage} && terraform init
