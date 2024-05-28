@@ -1,9 +1,3 @@
-resource "null_resource" "package_lambda" {
-  provisioner "local-exec" {
-    command = "cd ${path.module} && ./package_lambda.sh ${var.function_name} ${var.source_dir} ${local.build_dir}"
-  }
-}
-
 resource "aws_lambda_function" "app" {
   filename         = local.filename
   function_name    = var.function_name
@@ -11,7 +5,7 @@ resource "aws_lambda_function" "app" {
   handler          = var.handler
   layers           = var.layers
   runtime          = local.lambda_runtime
-  source_code_hash = data.archive_file.lambda.output_base64sha256
+  source_code_hash = filebase64sha256(data.external.lambda.result.filename)
   # environment {
   #   variables = {
   #     for pair in split("\n", var.secret_value) :

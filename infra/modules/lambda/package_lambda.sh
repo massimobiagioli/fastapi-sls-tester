@@ -3,29 +3,32 @@
 # Package a lambda function
 #
 # Parameters:
-#   $1: Lambda name
-#   $2: Lambda source directory
-#   $3: Build directory
+#   $name: Lambda name
+#   $source_dir: Lambda source directory
+#   $build_dir: Build directory
+#   $filename: Output zip file name
 #
 # Example:
-#   ./package_lambda.sh app_lambda ../../../../app ../../../../build/lambda
+#   ./package_lambda.sh app_lambda ../../../../app ../../../../build/lambda app_lambda.zip
+
+set -e
+
+eval "$(jq -r '@sh "name=\(.name) source_dir=\(.source_dir) build_dir=\(.build_dir) filename=\(.filename)"')"
 
 LAMBDA_ROOT_NAME='app'
 
 cd "$(dirname "$0")"
 
-printf "Packaging lambda $1\n"
+rm -rf $build_dir
+mkdir -p $build_dir
+cp -R $source_dir $build_dir/$LAMBDA_ROOT_NAME
 
-rm -rf $3
-mkdir -p $3
-cp -R $2 $3/$LAMBDA_ROOT_NAME
+cd $build_dir/$LAMBDA_ROOT_NAME
+rm -rf __pycache__/ 
+rm -f *.pyc 
 
-cd $3/$LAMBDA_ROOT_NAME
-rm -rf __pycache__/
-rm *.pyc
+cd ..
+zip -r $name.zip . -q
+rm -rf $LAMBDA_ROOT_NAME
 
-# cd ..
-# zip -r $1.zip .
-# rm -rf $LAMBDA_ROOT_NAME
-
-printf "Lambda $1 packaged\n"
+jq -n --arg filename "$filename" '{"filename":$filename}'
