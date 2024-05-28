@@ -1,4 +1,4 @@
-.PHONY: help start-local test coverage lint lint-fix format terraform-init terraform-apply
+.PHONY: help start-local test coverage lint lint-fix format terraform-init terraform-fmt terraform-apply
 
 default: help
 
@@ -29,6 +29,9 @@ format: # Run formatter
 
 terraform-init: # Initialize terraform
 	cd infra/live/${stage} && terraform init
+
+terraform-fmt: # Format terraform
+	cd infra/live/${stage} && terraform fmt 
 
 terraform-apply: # Apply terraform
 	cd infra/live/${stage} && terraform apply -auto-approve -var "stage=${stage}" -var "region=${region}"
