@@ -34,21 +34,6 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 }
 
 resource "aws_iam_role" "lambda_exec" {
-  name = "${var.function_name}-lambda-exec"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
+  name               = "${var.function_name}-lambda-exec"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }

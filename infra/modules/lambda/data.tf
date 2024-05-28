@@ -12,6 +12,19 @@ data "aws_iam_policy_document" "lambda_logging" {
   }
 }
 
+data "aws_iam_policy_document" "lambda_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    effect = "Allow"
+  }
+}
+
 data "external" "lambda" {
   program = ["bash", "${path.module}/package_lambda.sh"]
 
