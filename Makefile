@@ -1,4 +1,4 @@
-.PHONY: help start-local test coverage terraform-init terraform-apply
+.PHONY: help start-local test coverage lint lint-fix format terraform-init terraform-apply
 
 default: help
 
@@ -17,6 +17,15 @@ endif
 
 coverage: test # Run tests with coverage
 	poetry run pytest --cov-report term-missing --cov=app
+
+lint: # Run linter
+	poetry run ruff check .
+
+lint-fix: # Run linter with fix
+	poetry run ruff check --fix .
+
+format: # Run formatter
+	poetry run ruff format .
 
 terraform-init: # Initialize terraform
 	cd infra/live/${stage} && terraform init
