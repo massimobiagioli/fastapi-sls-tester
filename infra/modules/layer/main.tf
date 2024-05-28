@@ -21,5 +21,5 @@ resource "aws_lambda_layer_version" "lambda_layer" {
   description         = var.description
   skip_destroy        = true
   depends_on          = [aws_s3_object.layer_zip]
-  source_code_hash    = filebase64sha256(data.external.layer.result.filename)
+  source_code_hash    = filebase64sha256(local.pyproject_toml)
 }
