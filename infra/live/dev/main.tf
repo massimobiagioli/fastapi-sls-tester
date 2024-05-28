@@ -10,12 +10,11 @@ module "lambda" {
   source = "../../modules/lambda"
 
   function_name = local.app.name
+  stage         = var.stage
   source_dir    = local.lambda.main.source_dir
   handler       = local.lambda.main.handler
   layers        = [module.layer_dependencies.layer_arn]
-  #   secret_value  = module.ssm.secret_value
-  #   secret_arn    = module.ssm.secret_arn
-  tags = local.tags
+  tags          = local.tags
 }
 
 module "apigw" {

@@ -3,6 +3,11 @@ variable "function_name" {
   type        = string
 }
 
+variable "stage" {
+  description = "The name of the stage (e.g., dev, prod)"
+  type        = string
+}
+
 variable "handler" {
   description = "The name of the handler function"
   type        = string

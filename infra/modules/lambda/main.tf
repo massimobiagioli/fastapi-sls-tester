@@ -6,12 +6,10 @@ resource "aws_lambda_function" "app" {
   layers           = var.layers
   runtime          = local.lambda_runtime
   source_code_hash = filebase64sha256(data.external.lambda.result.filename)
-  # environment {
-  #   variables = {
-  #     for pair in split("\n", var.secret_value) :
-  #     split("=", pair)[0] => split("=", pair)[1]
-  #   }
-  # }
+
+  environment {
+    variables = { for kv in regexall("(.*?)=(.*)", file(local.dotenv_file)) : kv[0] => kv[1] }
+  }
 
   tags = var.tags
 }
